@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-const Auth = (props) => {
+const AuthReg = (props) => {
   return (
     <div>
       <Modal
@@ -12,7 +12,9 @@ const Auth = (props) => {
       >
         <Modal.Header closeButton>
           <div style={{ textAlign: "center", width: "100%" }}>
-            <Modal.Title id="contained-modal-title-vcenter">Login</Modal.Title>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Register
+            </Modal.Title>
           </div>
         </Modal.Header>
         <Modal.Body>
@@ -28,19 +30,13 @@ const Auth = (props) => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" />
-              <Form.Text className="text-muted">
-                We'll never share your password with anyone else.
-              </Form.Text>
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="formBasicCheckbox"
-            ></Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control type="password" placeholder="Confirm Password" />
+            </Form.Group>
             <Button variant="primary" type="submit">
               Submit
-            </Button>
-            <Button variant="dark" style={{ margin: "20px" }}>
-              Forgot Password?
             </Button>
           </Form>
         </Modal.Body>
@@ -48,4 +44,4 @@ const Auth = (props) => {
     </div>
   );
 };
-export default Auth;
+export default AuthReg;

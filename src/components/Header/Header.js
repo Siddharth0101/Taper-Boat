@@ -14,8 +14,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import Auth from "../../pages/Auth/Auth";
+import AuthReg from "../../pages/Auth/AuthReg";
 const Header = () => {
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalShowReg, setModalShowReg] = React.useState(false);
   return (
     <div>
       <Navbar bg="primary" expand="md" variant="dark">
@@ -98,7 +100,12 @@ const Header = () => {
                       <Card.Body>
                         <MenuItem>
                           <Button onClick={() => setModalShow(true)}>
-                            Register/Login
+                            Login
+                          </Button>
+                        </MenuItem>
+                        <MenuItem>
+                          <Button onClick={() => setModalShowReg(true)}>
+                            Register
                           </Button>
                         </MenuItem>
                         {/* <MenuItem>My Account</MenuItem>
@@ -113,6 +120,7 @@ const Header = () => {
         </Container>
       </Navbar>
       <Auth show={modalShow} onHide={() => setModalShow(false)} />
+      <AuthReg show={modalShowReg} onHide={() => setModalShowReg(false)} />
       <Outlet />
     </div>
   );
