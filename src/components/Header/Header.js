@@ -12,7 +12,10 @@ import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
+import { Outlet } from "react-router-dom";
+import Auth from "../../pages/Auth/Auth";
 const Header = () => {
+  const [modalShow, setModalShow] = React.useState(false);
   return (
     <div>
       <Navbar bg="primary" expand="md" variant="dark">
@@ -93,8 +96,13 @@ const Header = () => {
                   <MenuList>
                     <Card>
                       <Card.Body>
-                        <MenuItem>My Account</MenuItem>
-                        <MenuItem>LogOut</MenuItem>
+                        <MenuItem>
+                          <Button onClick={() => setModalShow(true)}>
+                            Register/Login
+                          </Button>
+                        </MenuItem>
+                        {/* <MenuItem>My Account</MenuItem>
+                        <MenuItem>LogOut</MenuItem> */}
                       </Card.Body>
                     </Card>
                   </MenuList>
@@ -104,6 +112,8 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Auth show={modalShow} onHide={() => setModalShow(false)} />
+      <Outlet />
     </div>
   );
 };
