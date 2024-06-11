@@ -1,13 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { Button } from "@mui/material";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
+import Almond from "./pages/Almond/Almond";
+import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
-import AuthReg from "./pages/Auth/AuthReg";
+import { useState } from "react";
+import AlertLogin from "./components/Alert/AlertLogin";
 
 function App() {
+  const isLogged = useSelector((state) => state.LoginStore.isLogged);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -16,6 +18,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/almond",
+          element: <div>{isLogged ? <Almond /> : <AlertLogin />}</div>,
         },
       ],
     },

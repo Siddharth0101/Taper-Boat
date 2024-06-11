@@ -27,6 +27,7 @@ const AuthReg = (props) => {
     } catch (error) {
       console.log(error);
     }
+    props.onHide();
   };
   return (
     <div>

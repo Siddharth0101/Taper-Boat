@@ -12,12 +12,21 @@ import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import Auth from "../../pages/Auth/Auth";
 import AuthReg from "../../pages/Auth/AuthReg";
+import { useDispatch, useSelector } from "react-redux";
+import { TokenSliceActions } from "../../store/TokenSlice";
 const Header = () => {
+  const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShowReg, setModalShowReg] = React.useState(false);
+  const isLogged = useSelector((state) => state.LoginStore.isLogged);
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    dispatch(TokenSliceActions.LogOut());
+    localStorage.clear("token");
+  };
   return (
     <div>
       <Navbar bg="primary" expand="md" variant="dark">
@@ -31,13 +40,16 @@ const Header = () => {
             }}
           />
 
-          <Navbar.Brand href="#home">PAPER BOAT</Navbar.Brand>
+          <Navbar.Brand as={NavLink} to="/">
+            PAPER BOAT
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <NavDropdown title="Nuts" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Almonds</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Cashews</NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to="/almond">
+                  Almonds
+                </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="#home">About Us</Nav.Link>
             </Nav>
@@ -98,18 +110,25 @@ const Header = () => {
                   <MenuList>
                     <Card>
                       <Card.Body>
-                        <MenuItem>
-                          <Button onClick={() => setModalShow(true)}>
-                            Login
-                          </Button>
-                        </MenuItem>
-                        <MenuItem>
-                          <Button onClick={() => setModalShowReg(true)}>
-                            Register
-                          </Button>
-                        </MenuItem>
-                        {/* <MenuItem>My Account</MenuItem>
-                        <MenuItem>LogOut</MenuItem> */}
+                        {!isLogged && (
+                          <div>
+                            <MenuItem>
+                              <Button onClick={() => setModalShow(true)}>
+                                Login
+                              </Button>
+                            </MenuItem>
+                            <MenuItem>
+                              <Button onClick={() => setModalShowReg(true)}>
+                                Register
+                              </Button>
+                            </MenuItem>
+                          </div>
+                        )}
+                        {isLogged && (
+                          <MenuItem>
+                            <Button onClick={logoutHandler}>LogOut</Button>
+                          </MenuItem>
+                        )}
                       </Card.Body>
                     </Card>
                   </MenuList>

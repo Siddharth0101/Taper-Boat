@@ -2,7 +2,10 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { TokenSliceActions } from "../../store/TokenSlice";
 const Auth = (props) => {
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
   const submitHandler = async (e) => {
@@ -26,7 +29,9 @@ const Auth = (props) => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        dispatch(TokenSliceActions.LogIn(data.idToken));
+        localStorage.setItem("token", data.idToken);
+        props.onHide();
       }
     } catch (error) {
       console.log(error);
