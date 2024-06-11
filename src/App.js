@@ -29,7 +29,7 @@ function App() {
   return (
     <div
       style={{
-        backgroundColor: "gray",
+        backgroundColor: "black",
         height: "100vh",
         width: "100vw",
         margin: 0,

@@ -12,12 +12,13 @@ import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Auth from "../../pages/Auth/Auth";
 import AuthReg from "../../pages/Auth/AuthReg";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenSliceActions } from "../../store/TokenSlice";
 const Header = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShowReg, setModalShowReg] = React.useState(false);
@@ -26,6 +27,7 @@ const Header = () => {
     e.preventDefault();
     dispatch(TokenSliceActions.LogOut());
     localStorage.clear("token");
+    navigate("/");
   };
   return (
     <div>
