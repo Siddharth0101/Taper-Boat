@@ -18,7 +18,6 @@ const Almond = () => {
     }
   };
 
-  // Initial dispatch to set default sorting order
   useEffect(() => {
     if (selectedOption === "high-to-low-radio") {
       dispatch(DataSliceActions.HighToLow());

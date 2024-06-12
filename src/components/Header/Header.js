@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,27 +8,41 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  IconButton,
+} from "@chakra-ui/react";
 import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Auth from "../../pages/Auth/Auth";
 import AuthReg from "../../pages/Auth/AuthReg";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenSliceActions } from "../../store/TokenSlice";
+import CartOffcanvas from "../CartOffcanvas/CartOffcanvas";
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShowReg, setModalShowReg] = React.useState(false);
   const isLogged = useSelector((state) => state.LoginStore.isLogged);
+
   const logoutHandler = (e) => {
     e.preventDefault();
     dispatch(TokenSliceActions.LogOut());
     localStorage.clear("token");
     navigate("/");
   };
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div>
       <Navbar bg="primary" expand="md" variant="dark">
@@ -41,7 +55,6 @@ const Header = () => {
               fontSize: 32,
             }}
           />
-
           <Navbar.Brand as={NavLink} to="/">
             PAPER BOAT
           </Navbar.Brand>
@@ -55,7 +68,7 @@ const Header = () => {
               </NavDropdown>
               <Nav.Link href="#home">About Us</Nav.Link>
             </Nav>
-            <Form inline>
+            <Form inline className="mr-3">
               <Row className="align-items-center">
                 <Col xs="auto">
                   <Form.Control
@@ -68,12 +81,6 @@ const Header = () => {
             </Form>
             <div className="d-flex align-items-center">
               <div className="d-md-none ml-auto">
-                <CircleNotificationsIcon
-                  sx={{
-                    fontSize: 32,
-                    marginLeft: 2,
-                  }}
-                />
                 <AccountCircleIcon
                   sx={{
                     fontSize: 32,
@@ -88,17 +95,10 @@ const Header = () => {
                 />
               </div>
               <div className="d-none d-md-flex">
-                <CircleNotificationsIcon
-                  sx={{
-                    fontSize: 32,
-                    marginLeft: 2,
-                  }}
-                />
-                <ShoppingCartIcon
-                  sx={{
-                    fontSize: 32,
-                    marginLeft: 2,
-                  }}
+                <IconButton
+                  icon={<ShoppingCartIcon fontSize="large" />}
+                  onClick={handleShow}
+                  variant="ghost"
                 />
                 <Menu>
                   <MenuButton as={Button} colorScheme="pink">
@@ -142,6 +142,7 @@ const Header = () => {
       </Navbar>
       <Auth show={modalShow} onHide={() => setModalShow(false)} />
       <AuthReg show={modalShowReg} onHide={() => setModalShowReg(false)} />
+      <CartOffcanvas show={show} handleClose={handleClose} />
       <Outlet />
     </div>
   );
