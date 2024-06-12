@@ -14,6 +14,8 @@ const CartSlice = createSlice({
         0
       );
     },
+    EDIT(state, action) {},
+    Remove(state, action) {},
   },
 });
 export const CartSliceActions = CartSlice.actions;

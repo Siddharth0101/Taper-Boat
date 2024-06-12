@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
+import CartEditModal from "../CartEditModal/CartEditModal";
 
 const CartOffcanvas = ({ show, handleClose }) => {
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState();
+  const handleEditModalClose = () => setShowEditModal(false);
+  const handleEditModalShow = () => setShowEditModal(true);
+
   const cartData = useSelector((state) => state.CartData.items);
   const cartTotal = useSelector((state) => state.CartData.totalAmount);
 
@@ -55,6 +61,10 @@ const CartOffcanvas = ({ show, handleClose }) => {
       marginTop: "1rem",
     },
   };
+  const editHandler = (item) => {
+    setSelectedItem(item);
+    handleEditModalShow();
+  };
 
   return (
     <Offcanvas show={show} onHide={handleClose} placement="end">
@@ -99,7 +109,12 @@ const CartOffcanvas = ({ show, handleClose }) => {
                       </div>
                     </Card.Text>
                     <div style={styles.buttonGroup}>
-                      <Button variant="warning">Edit</Button>
+                      <Button
+                        variant="warning"
+                        onClick={() => editHandler(item)}
+                      >
+                        Edit
+                      </Button>
                       <Button variant="danger">Remove</Button>
                     </div>
                   </Col>
@@ -115,6 +130,11 @@ const CartOffcanvas = ({ show, handleClose }) => {
           Check Out
         </Button>
       </Offcanvas.Body>
+      <CartEditModal
+        show={showEditModal}
+        handleClose={handleEditModalClose}
+        item={selectedItem}
+      />
     </Offcanvas>
   );
 };
