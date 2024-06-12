@@ -4,8 +4,9 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartEditModal from "../CartEditModal/CartEditModal";
+import { CartSliceActions } from "../../store/CartSlice";
 
 const CartOffcanvas = ({ show, handleClose }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -15,6 +16,7 @@ const CartOffcanvas = ({ show, handleClose }) => {
 
   const cartData = useSelector((state) => state.CartData.items);
   const cartTotal = useSelector((state) => state.CartData.totalAmount);
+  const dispatch = useDispatch();
 
   const styles = {
     cartItemImg: {
@@ -61,9 +63,14 @@ const CartOffcanvas = ({ show, handleClose }) => {
       marginTop: "1rem",
     },
   };
+
   const editHandler = (item) => {
     setSelectedItem(item);
     handleEditModalShow();
+  };
+
+  const removeHandler = (id) => {
+    dispatch(CartSliceActions.Remove(id));
   };
 
   return (
@@ -115,7 +122,12 @@ const CartOffcanvas = ({ show, handleClose }) => {
                       >
                         Edit
                       </Button>
-                      <Button variant="danger">Remove</Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => removeHandler(item.Id)}
+                      >
+                        Remove
+                      </Button>
                     </div>
                   </Col>
                 </Row>

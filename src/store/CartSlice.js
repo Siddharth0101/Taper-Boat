@@ -14,9 +14,26 @@ const CartSlice = createSlice({
         0
       );
     },
-    EDIT(state, action) {},
-    Remove(state, action) {},
+    EDIT(state, action) {
+      const { id, Amount } = action.payload;
+      const itemIndex = state.items.findIndex((item) => item.Id === id);
+      if (itemIndex !== -1) {
+        state.items[itemIndex].Amount = Amount;
+      }
+      state.totalAmount = state.items.reduce(
+        (total, item) => total + item.Amount * item.Price,
+        0
+      );
+    },
+    Remove(state, action) {
+      state.items = state.items.filter((item) => item.Id !== action.payload);
+      state.totalAmount = state.items.reduce(
+        (total, item) => total + item.Amount * item.Price,
+        0
+      );
+    },
   },
 });
+
 export const CartSliceActions = CartSlice.actions;
 export default CartSlice;
