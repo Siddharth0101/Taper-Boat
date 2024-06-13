@@ -13,7 +13,6 @@ const CartOffcanvas = ({ show, handleClose }) => {
   const [selectedItem, setSelectedItem] = useState();
   const handleEditModalClose = () => setShowEditModal(false);
   const handleEditModalShow = () => setShowEditModal(true);
-
   const cartData = useSelector((state) => state.CartData.items);
   const cartTotal = useSelector((state) => state.CartData.totalAmount);
   const dispatch = useDispatch();

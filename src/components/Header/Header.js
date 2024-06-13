@@ -18,13 +18,14 @@ import {
   Button,
   IconButton,
 } from "@chakra-ui/react";
-import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Auth from "../../pages/Auth/Auth";
 import AuthReg from "../../pages/Auth/AuthReg";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenSliceActions } from "../../store/TokenSlice";
 import CartOffcanvas from "../CartOffcanvas/CartOffcanvas";
 import SearchOffcanvas from "../searchOffcanvas/searchOffcanvas";
+import { SearchSliceAction } from "../../store/SearchSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -44,12 +45,12 @@ const Header = () => {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
-  const [searchSubmitted, setSearchSubmitted] = useState(false); // Track if search was submitted
+  const [searchSubmitted, setSearchSubmitted] = useState(false);
 
   const handleSearchChange = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
-    setSearchSubmitted(false); // Reset searchSubmitted on each change
+    setSearchSubmitted(false);
   };
 
   const handleSearchSubmit = (e) => {
@@ -66,7 +67,7 @@ const Header = () => {
   };
 
   const [searchTerm, setSearchTerm] = useState("");
-
+  dispatch(SearchSliceAction.enteredSentenceInput(searchTerm));
   return (
     <div>
       <Navbar bg="primary" expand="md" variant="dark">
