@@ -14,6 +14,21 @@ const CartSlice = createSlice({
         0
       );
     },
+    ADD(state, action) {
+      const newItem = action.payload;
+      const existingItemIndex = state.items.findIndex(
+        (item) => item.Id === newItem.Id
+      );
+      if (existingItemIndex >= 0) {
+        state.items[existingItemIndex].Amount += newItem.Amount;
+      } else {
+        state.items.push(newItem);
+      }
+      state.totalAmount = state.items.reduce(
+        (total, item) => total + item.Amount * item.Price,
+        0
+      );
+    },
     EDIT(state, action) {
       const { id, Amount } = action.payload;
       const itemIndex = state.items.findIndex((item) => item.Id === id);

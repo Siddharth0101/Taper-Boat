@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Badge } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,9 @@ import PropTypes from "prop-types";
 import { CartSliceActions } from "../../store/CartSlice";
 
 const CardAlmond = () => {
-  const datas = useSelector((state) => state.Data.items);
-  const [cartData, setCartData] = useState([]);
+  const datas = useSelector((state) => state.Data.items); // Accessing items from DataSlice
+  const cartData = useSelector((state) => state.CartData.items); // Accessing items from CartSlice
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -18,20 +19,23 @@ const CardAlmond = () => {
       }}
     >
       {datas.map((item, index) => (
-        <ItemCard
-          key={index}
-          item={item}
-          setCartData={setCartData}
-          cartData={cartData}
-        />
+        <ItemCard key={index} item={item} cartData={cartData} />
       ))}
     </div>
   );
 };
 
-const ItemCard = ({ item, setCartData, cartData }) => {
+const ItemCard = ({ item, cartData }) => {
   const [number, setNumber] = useState(0);
-  const dispatch = useDispatch(); // Correct use of useDispatch
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Reset the item count to 0 if the item is not in the cart
+    const existingItem = cartData?.find((cartItem) => cartItem.Id === item.Id);
+    if (!existingItem) {
+      setNumber(0);
+    }
+  }, [cartData, item.Id]);
 
   const increment = () => {
     setNumber((prev) => prev + 1);
@@ -44,13 +48,16 @@ const ItemCard = ({ item, setCartData, cartData }) => {
   };
 
   const buyHandler = () => {
-    const data = {
+    if (number <= 0) return; // Prevent adding if number is zero or less
+
+    const newItem = {
       ...item,
       Amount: number,
     };
-    const updatedCartData = [...cartData, data];
-    setCartData(updatedCartData);
-    dispatch(CartSliceActions.DISPLAY(updatedCartData));
+
+    dispatch(CartSliceActions.ADD(newItem));
+
+    setNumber(0); // Reset the number to 0 after adding to cart
   };
 
   return (
@@ -95,7 +102,6 @@ const ItemCard = ({ item, setCartData, cartData }) => {
 
 ItemCard.propTypes = {
   item: PropTypes.object.isRequired,
-  setCartData: PropTypes.func.isRequired,
   cartData: PropTypes.array.isRequired,
 };
 
