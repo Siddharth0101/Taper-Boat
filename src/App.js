@@ -4,9 +4,8 @@ import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import Almond from "./pages/Almond/Almond";
 import { useSelector } from "react-redux";
-import Auth from "./pages/Auth/Auth";
-import { useState } from "react";
 import AlertLogin from "./components/Alert/AlertLogin";
+import Search from "./components/Search/Search";
 
 function App() {
   const isLogged = useSelector((state) => state.LoginStore.isLogged);
@@ -36,6 +35,7 @@ function App() {
       }}
     >
       <RouterProvider router={router} />
+      <Search />
     </div>
   );
 }

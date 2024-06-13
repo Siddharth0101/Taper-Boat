@@ -1,5 +1,3 @@
-// SearchOffcanvas.js
-
 import React from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
