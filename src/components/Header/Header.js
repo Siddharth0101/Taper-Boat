@@ -24,6 +24,7 @@ import AuthReg from "../../pages/Auth/AuthReg";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenSliceActions } from "../../store/TokenSlice";
 import CartOffcanvas from "../CartOffcanvas/CartOffcanvas";
+import SearchOffcanvas from "../searchOffcanvas/searchOffcanvas";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -40,8 +41,31 @@ const Header = () => {
   };
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const [searchSubmitted, setSearchSubmitted] = useState(false); // Track if search was submitted
+
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSearchTerm(e.target.value);
+    setSearchSubmitted(false); // Reset searchSubmitted on each change
+  };
+
+  const handleSearchSubmit = (e) => {
+    if (e.key === "Enter") {
+      setSearchSubmitted(true);
+      handleShowSearch();
+    }
+  };
+
+  const [showSearch, setShowSearch] = useState(false);
+  const handleCloseSearch = () => setShowSearch(false);
+  const handleShowSearch = () => {
+    setShowSearch(true);
+  };
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div>
@@ -68,17 +92,20 @@ const Header = () => {
               </NavDropdown>
               <Nav.Link href="#home">About Us</Nav.Link>
             </Nav>
-            <Form inline className="mr-3">
+            <Form inline className="mr-3" onSubmit={(e) => e.preventDefault()}>
               <Row className="align-items-center">
                 <Col xs="auto">
                   <Form.Control
                     type="text"
                     placeholder="Search"
                     className="mr-sm-2"
+                    onChange={handleSearchChange}
+                    onKeyDown={handleSearchSubmit}
                   />
                 </Col>
               </Row>
             </Form>
+
             <div className="d-flex align-items-center">
               <div className="d-md-none ml-auto">
                 <AccountCircleIcon
@@ -143,6 +170,12 @@ const Header = () => {
       <Auth show={modalShow} onHide={() => setModalShow(false)} />
       <AuthReg show={modalShowReg} onHide={() => setModalShowReg(false)} />
       <CartOffcanvas show={show} handleClose={handleClose} />
+      {searchSubmitted && (
+        <SearchOffcanvas
+          showSearch={showSearch}
+          handleCloseSearch={handleCloseSearch}
+        />
+      )}
       <Outlet />
     </div>
   );
