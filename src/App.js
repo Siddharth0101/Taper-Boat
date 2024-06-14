@@ -37,6 +37,7 @@ function App() {
         height: "100vh",
         width: "100vw",
         margin: 0,
+        background: "linear-gradient(135deg, #96fbc4 0%, #f9f586 100%)",
       }}
     >
       <RouterProvider router={router} />
