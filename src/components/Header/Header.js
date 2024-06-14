@@ -30,9 +30,14 @@ import { SearchSliceAction } from "../../store/SearchSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [modalShow, setModalShow] = React.useState(false);
-  const [modalShowReg, setModalShowReg] = React.useState(false);
   const isLogged = useSelector((state) => state.LoginStore.isLogged);
+
+  const [modalShow, setModalShow] = useState(false);
+  const [modalShowReg, setModalShowReg] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchSubmitted, setSearchSubmitted] = useState(false);
 
   const logoutHandler = (e) => {
     e.preventDefault();
@@ -41,14 +46,10 @@ const Header = () => {
     navigate("/");
   };
 
-  const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
-  const [searchSubmitted, setSearchSubmitted] = useState(false);
-
   const handleSearchChange = (e) => {
-    e.preventDefault();
     setSearchTerm(e.target.value);
     setSearchSubmitted(false);
   };
@@ -60,27 +61,30 @@ const Header = () => {
     }
   };
 
-  const [showSearch, setShowSearch] = useState(false);
   const handleCloseSearch = () => setShowSearch(false);
-  const handleShowSearch = () => {
-    setShowSearch(true);
-  };
+  const handleShowSearch = () => setShowSearch(true);
 
-  const [searchTerm, setSearchTerm] = useState("");
   dispatch(SearchSliceAction.enteredSentenceInput(searchTerm));
+
   return (
-    <div>
+    <div style={{ position: "relative", zIndex: 1000 }}>
+      {" "}
+      {/* Added z-index style here */}
       <Navbar bg="primary" expand="md" variant="dark">
         <Container>
           <AdbIcon
-            sx={{
+            style={{
               display: { xs: "none", md: "flex" },
-              mr: 2,
+              marginRight: 2,
               color: "#c0c0c0",
               fontSize: 32,
             }}
           />
-          <Navbar.Brand as={NavLink} to="/">
+          <Navbar.Brand
+            as={NavLink}
+            to="/"
+            style={{ marginLeft: 10, fontSize: 20 }}
+          >
             PAPER BOAT
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -91,7 +95,11 @@ const Header = () => {
                   Almonds
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={NavLink} to="/aboutus">
+              <Nav.Link
+                as={NavLink}
+                to="/aboutus"
+                style={{ marginLeft: 20, fontSize: 17 }}
+              >
                 About Us
               </Nav.Link>
             </Nav>
@@ -104,6 +112,7 @@ const Header = () => {
                     className="mr-sm-2"
                     onChange={handleSearchChange}
                     onKeyDown={handleSearchSubmit}
+                    style={{ padding: 10, fontSize: 16, borderRadius: 5 }}
                   />
                 </Col>
               </Row>
@@ -112,15 +121,15 @@ const Header = () => {
             <div className="d-flex align-items-center">
               <div className="d-md-none ml-auto">
                 <AccountCircleIcon
-                  sx={{
+                  style={{
                     fontSize: 32,
-                    marginLeft: 2,
+                    marginLeft: 10,
                   }}
                 />
                 <ShoppingCartIcon
-                  sx={{
+                  style={{
                     fontSize: 32,
-                    marginLeft: 2,
+                    marginLeft: 10,
                   }}
                 />
               </div>
@@ -129,13 +138,14 @@ const Header = () => {
                   icon={<ShoppingCartIcon fontSize="large" />}
                   onClick={handleShow}
                   variant="ghost"
+                  style={{ marginRight: 10 }}
                 />
                 <Menu>
                   <MenuButton as={Button} colorScheme="pink">
                     <AccountCircleIcon
-                      sx={{
+                      style={{
                         fontSize: 32,
-                        marginLeft: 2,
+                        marginLeft: 10,
                       }}
                     />
                   </MenuButton>

@@ -17,52 +17,6 @@ const CartOffcanvas = ({ show, handleClose }) => {
   const cartTotal = useSelector((state) => state.CartData.totalAmount);
   const dispatch = useDispatch();
 
-  const styles = {
-    cartItemImg: {
-      width: "100%",
-      height: "auto",
-      objectFit: "cover",
-    },
-    cartTotal: {
-      fontSize: "1.25rem",
-      fontWeight: "bold",
-      marginTop: "1rem",
-      textAlign: "right",
-    },
-    offcanvasBody: {
-      padding: "1.5rem",
-    },
-    offcanvasTitle: {
-      fontWeight: "bold",
-      color: "#343a40",
-    },
-    card: {
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-      marginBottom: "1rem",
-    },
-    cardTitle: {
-      fontSize: "1.2rem",
-    },
-    cardTextDiv: {
-      marginBottom: "0.5rem",
-    },
-    buttonGroup: {
-      display: "flex",
-      justifyContent: "space-between",
-      marginTop: "1rem",
-    },
-    emptyCartText: {
-      textAlign: "center",
-      fontStyle: "italic",
-      color: "#888",
-    },
-    checkoutButton: {
-      fontWeight: "bold",
-      width: "100%",
-      marginTop: "1rem",
-    },
-  };
-
   const editHandler = (item) => {
     setSelectedItem(item);
     handleEditModalShow();
@@ -75,16 +29,26 @@ const CartOffcanvas = ({ show, handleClose }) => {
   return (
     <Offcanvas show={show} onHide={handleClose} placement="end">
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title style={styles.offcanvasTitle}>
+        <Offcanvas.Title style={{ fontWeight: "bold", color: "#343a40" }}>
           Shopping Cart
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body style={styles.offcanvasBody}>
+      <Offcanvas.Body style={{ padding: "1.5rem" }}>
         {cartData.length === 0 ? (
-          <p style={styles.emptyCartText}>Your cart is empty</p>
+          <p
+            style={{ textAlign: "center", fontStyle: "italic", color: "#888" }}
+          >
+            Your cart is empty
+          </p>
         ) : (
           cartData.map((item, index) => (
-            <Card key={index} style={styles.card}>
+            <Card
+              key={index}
+              style={{
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                marginBottom: "1rem",
+              }}
+            >
               <Card.Body>
                 <Row>
                   <Col
@@ -99,22 +63,32 @@ const CartOffcanvas = ({ show, handleClose }) => {
                       variant="top"
                       src={item.image}
                       alt={item.title}
-                      style={styles.cartItemImg}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        objectFit: "cover",
+                      }}
                     />
                   </Col>
                   <Col xs={8}>
-                    <Card.Title style={styles.cardTitle}>
+                    <Card.Title style={{ fontSize: "1.2rem" }}>
                       {item.title}
                     </Card.Title>
                     <Card.Text>
-                      <div style={styles.cardTextDiv}>
+                      <div style={{ marginBottom: "0.5rem" }}>
                         <strong>Price:</strong> ${item.Price}
                       </div>
-                      <div style={styles.cardTextDiv}>
+                      <div>
                         <strong>Amount:</strong> {item.Amount}
                       </div>
                     </Card.Text>
-                    <div style={styles.buttonGroup}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginTop: "1rem",
+                      }}
+                    >
                       <Button
                         variant="warning"
                         onClick={() => editHandler(item)}
@@ -134,10 +108,20 @@ const CartOffcanvas = ({ show, handleClose }) => {
             </Card>
           ))
         )}
-        <div style={styles.cartTotal}>
+        <div
+          style={{
+            fontSize: "1.25rem",
+            fontWeight: "bold",
+            marginTop: "1rem",
+            textAlign: "right",
+          }}
+        >
           <strong>Total:</strong> ${cartTotal}
         </div>
-        <Button variant="success" style={styles.checkoutButton}>
+        <Button
+          variant="success"
+          style={{ fontWeight: "bold", width: "100%", marginTop: "1rem" }}
+        >
           Check Out
         </Button>
       </Offcanvas.Body>

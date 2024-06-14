@@ -33,28 +33,52 @@ const CartEditModal = ({ show, handleClose, item }) => {
 
   return (
     <Modal show={show} onHide={handleClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Cart Item</Modal.Title>
+      <Modal.Header
+        closeButton
+        style={{
+          backgroundColor: "#f8f9fa",
+          borderBottom: "1px solid #dee2e6",
+        }}
+      >
+        <Modal.Title style={{ color: "#007bff" }}>Edit Cart Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="text-center mb-3">
-          <strong>Change Amount:</strong>
+          <strong style={{ fontSize: "1.2rem" }}>Change Amount:</strong>
         </div>
         <InputGroup className="mb-3">
           <Button variant="outline-secondary" onClick={decrementAmount}>
             -
           </Button>
-          <FormControl className="text-center" value={amount} readOnly />
+          <FormControl
+            className="text-center"
+            value={amount}
+            readOnly
+            style={{ minWidth: "3rem", fontSize: "1.2rem", fontWeight: "bold" }}
+          />
           <Button variant="outline-secondary" onClick={incrementAmount}>
             +
           </Button>
         </InputGroup>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+      <Modal.Footer
+        style={{
+          borderTop: "1px solid #dee2e6",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
+          variant="secondary"
+          onClick={handleClose}
+          style={{ width: "8rem" }}
+        >
           Close
         </Button>
-        <Button variant="primary" onClick={saveChangesHandler}>
+        <Button
+          variant="primary"
+          onClick={saveChangesHandler}
+          style={{ width: "8rem" }}
+        >
           Save Changes
         </Button>
       </Modal.Footer>

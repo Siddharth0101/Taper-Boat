@@ -2,9 +2,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { useRef } from "react";
+
 const AuthReg = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
@@ -29,6 +31,7 @@ const AuthReg = (props) => {
     }
     props.onHide();
   };
+
   return (
     <div>
       <Modal
@@ -39,12 +42,15 @@ const AuthReg = (props) => {
       >
         <Modal.Header closeButton>
           <div style={{ textAlign: "center", width: "100%" }}>
-            <Modal.Title id="contained-modal-title-vcenter">
+            <Modal.Title
+              id="contained-modal-title-vcenter"
+              style={{ fontSize: "24px", fontWeight: "bold" }}
+            >
               Register
             </Modal.Title>
           </div>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ padding: "20px" }}>
           <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -52,6 +58,7 @@ const AuthReg = (props) => {
                 type="email"
                 placeholder="Enter email"
                 ref={emailRef}
+                style={{ fontSize: "16px", padding: "10px" }}
               />
             </Form.Group>
 
@@ -61,9 +68,15 @@ const AuthReg = (props) => {
                 type="password"
                 placeholder="Password"
                 ref={passwordRef}
+                style={{ fontSize: "16px", padding: "10px" }}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ width: "100%", fontSize: "18px", padding: "10px" }}
+            >
               Submit
             </Button>
           </Form>
@@ -72,4 +85,5 @@ const AuthReg = (props) => {
     </div>
   );
 };
+
 export default AuthReg;

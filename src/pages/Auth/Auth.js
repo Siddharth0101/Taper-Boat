@@ -1,13 +1,13 @@
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import { useRef } from "react";
+import React, { useRef } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { TokenSliceActions } from "../../store/TokenSlice";
+
 const Auth = (props) => {
   const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
@@ -37,6 +37,7 @@ const Auth = (props) => {
       console.log(error);
     }
   };
+
   return (
     <div>
       <Modal
@@ -47,42 +48,53 @@ const Auth = (props) => {
       >
         <Modal.Header closeButton>
           <div style={{ textAlign: "center", width: "100%" }}>
-            <Modal.Title id="contained-modal-title-vcenter">Login</Modal.Title>
+            <Modal.Title
+              id="contained-modal-title-vcenter"
+              style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+            >
+              Login
+            </Modal.Title>
           </div>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={submitHandler}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter email"
                 ref={emailRef}
+                style={{ borderRadius: "0.5rem", borderColor: "#ced4da" }}
               />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
               </Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Password"
                 ref={passwordRef}
+                style={{ borderRadius: "0.5rem", borderColor: "#ced4da" }}
               />
               <Form.Text className="text-muted">
                 We'll never share your password with anyone else.
               </Form.Text>
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="formBasicCheckbox"
-            ></Form.Group>
-            <Button variant="primary" type="submit">
+
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ borderRadius: "0.5rem" }}
+            >
               Submit
             </Button>
-            <Button variant="dark" style={{ margin: "20px" }}>
+            <Button
+              variant="dark"
+              style={{ margin: "20px", borderRadius: "0.5rem" }}
+            >
               Forgot Password?
             </Button>
           </Form>
@@ -91,4 +103,5 @@ const Auth = (props) => {
     </div>
   );
 };
+
 export default Auth;

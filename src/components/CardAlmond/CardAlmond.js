@@ -8,6 +8,7 @@ import { CartSliceActions } from "../../store/CartSlice";
 const CardAlmond = () => {
   const datas = useSelector((state) => state.Data.items);
   const cartData = useSelector((state) => state.CartData.items);
+
   return (
     <div
       style={{
@@ -25,12 +26,15 @@ const CardAlmond = () => {
 
 const ItemCard = ({ item, cartData }) => {
   const [number, setNumber] = useState(0);
+  const [hovered, setHovered] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const existingItem = cartData?.find((cartItem) => cartItem.Id === item.Id);
     if (!existingItem) {
       setNumber(0);
+    } else {
+      setNumber(existingItem.Amount);
     }
   }, [cartData, item.Id]);
 
@@ -59,14 +63,47 @@ const ItemCard = ({ item, cartData }) => {
 
   return (
     <Card
-      bg="dark"
-      text="white"
-      style={{ width: "18rem", marginBottom: "20px" }}
+      style={{
+        width: "18rem",
+        marginBottom: "20px",
+        backgroundColor: "#343a40",
+        color: "white",
+        border: "1px solid #dee2e6",
+        borderRadius: "10px",
+        transition: "transform 0.2s ease-in-out",
+        transform: hovered ? "scale(1.02)" : "scale(1)",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <Card.Img variant="top" src={item.image} />
-      <Card.Body>
-        <Card.Title>{item.Name}</Card.Title>
-        <Card.Text>Price: ₹{item.Price}</Card.Text>
+      <Card.Img
+        variant="top"
+        src={item.image}
+        style={{
+          borderRadius: "10px 10px 0 0",
+          height: "250px",
+          objectFit: "cover",
+        }}
+      />
+      <Card.Body style={{ padding: "1.5rem" }}>
+        <Card.Title
+          style={{
+            fontSize: "1.5rem",
+            marginBottom: "10px",
+            fontFamily: "Arial, sans-serif",
+          }}
+        >
+          {item.Name}
+        </Card.Title>
+        <Card.Text
+          style={{
+            fontSize: "1.2rem",
+            marginBottom: "10px",
+            color: "#ced4da",
+          }}
+        >
+          Price: ₹{item.Price}
+        </Card.Text>
         <div
           style={{
             display: "flex",
@@ -75,19 +112,56 @@ const ItemCard = ({ item, cartData }) => {
             marginBottom: "10px",
           }}
         >
-          <Button variant="secondary" onClick={decrement}>
+          <Button
+            variant="light"
+            onClick={decrement}
+            style={{
+              fontSize: "1rem",
+              backgroundColor: "#6c757d",
+              borderColor: "#6c757d",
+              color: "white",
+            }}
+          >
             -
           </Button>
-          <Badge pill bg="light" text="dark" style={{ fontSize: "1rem" }}>
+          <Badge
+            pill
+            bg="light"
+            text="dark"
+            style={{
+              fontSize: "1rem",
+              backgroundColor: "#f8f9fa",
+              color: "#343a40",
+              padding: "8px",
+              minWidth: "40px",
+              textAlign: "center",
+              fontFamily: "Arial, sans-serif",
+            }}
+          >
             {number}
           </Badge>
-          <Button variant="secondary" onClick={increment}>
+          <Button
+            variant="light"
+            onClick={increment}
+            style={{
+              fontSize: "1rem",
+              backgroundColor: "#6c757d",
+              borderColor: "#6c757d",
+              color: "white",
+            }}
+          >
             +
           </Button>
         </div>
         <Button
           variant="primary"
-          style={{ marginRight: "10px" }}
+          style={{
+            fontSize: "1rem",
+            backgroundColor: "#007bff",
+            borderColor: "#007bff",
+            width: "100%",
+            transition: "background-color 0.3s ease",
+          }}
           onClick={buyHandler}
         >
           Buy Now
@@ -96,4 +170,5 @@ const ItemCard = ({ item, cartData }) => {
     </Card>
   );
 };
+
 export default CardAlmond;

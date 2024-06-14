@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import CardAlmond from "../../components/CardAlmond/CardAlmond";
-import { DataSliceActions } from "../../store/DataSlice"; // Adjust the path according to your file structure
+import { DataSliceActions } from "../../store/DataSlice";
 
 const Almond = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -27,9 +27,15 @@ const Almond = () => {
   }, [dispatch, selectedOption]);
 
   return (
-    <div style={{ margin: "20px", color: "white" }}>
-      <h2 style={{ textAlign: "center" }}>Almond</h2>
-      <Form style={{ marginBottom: "20px" }}>
+    <div
+      style={{
+        margin: "20px",
+        color: "white",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <h2 style={{ textAlign: "center", fontSize: "2rem" }}>Almond</h2>
+      <Form style={{ marginBottom: "20px", textAlign: "center" }}>
         <div
           className="mb-3"
           style={{ display: "flex", justifyContent: "center" }}
@@ -41,7 +47,7 @@ const Almond = () => {
             name="price-order"
             checked={selectedOption === "high-to-low-radio"}
             onChange={handleRadioChange}
-            style={{ marginRight: "20px", color: "white" }}
+            style={{ marginRight: "20px", color: "white", fontSize: "1rem" }}
           />
           <Form.Check
             type="radio"
@@ -50,7 +56,7 @@ const Almond = () => {
             name="price-order"
             checked={selectedOption === "low-to-high-radio"}
             onChange={handleRadioChange}
-            style={{ color: "white" }}
+            style={{ color: "white", fontSize: "1rem" }}
           />
         </div>
       </Form>

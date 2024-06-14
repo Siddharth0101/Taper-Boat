@@ -42,34 +42,34 @@ const SearchOffcanvas = ({ showSearch, handleCloseSearch }) => {
             key={item.Id}
             bg="dark"
             text="white"
-            style={{ width: "18rem", marginBottom: "20px" }}
+            style={{ marginBottom: "20px" }}
+            className="shadow"
           >
             <Card.Img variant="top" src={item.image} />
             <Card.Body>
               <Card.Title>{item.Name}</Card.Title>
               <Card.Text>Price: ₹{item.Price}</Card.Text>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <Button variant="secondary" onClick={() => decrement(index)}>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <Button
+                  variant="outline-light"
+                  onClick={() => decrement(index)}
+                >
                   -
                 </Button>
-                <Badge pill bg="light" text="dark" style={{ fontSize: "1rem" }}>
+                <Badge pill bg="light" text="dark" className="fs-5">
                   {counts[index]}
                 </Badge>
-                <Button variant="secondary" onClick={() => increment(index)}>
+                <Button
+                  variant="outline-light"
+                  onClick={() => increment(index)}
+                >
                   +
                 </Button>
               </div>
               <Button
                 variant="primary"
-                style={{ marginRight: "10px" }}
                 onClick={() => addToCartHandler(item, counts[index])}
+                className="w-100"
               >
                 ADD TO CART
               </Button>
