@@ -96,10 +96,4 @@ const ItemCard = ({ item, cartData }) => {
     </Card>
   );
 };
-
-ItemCard.propTypes = {
-  item: PropTypes.object.isRequired,
-  cartData: PropTypes.array.isRequired,
-};
-
 export default CardAlmond;

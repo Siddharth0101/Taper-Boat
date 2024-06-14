@@ -3,9 +3,11 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CartSliceActions } from "../../store/CartSlice";
 
 const SearchOffcanvas = ({ showSearch, handleCloseSearch }) => {
+  const dispatch = useDispatch();
   const filterDisplay = useSelector((state) => state.SearchData.items);
   const [counts, setCounts] = useState(Array(filterDisplay.length).fill(0));
 
@@ -26,9 +28,7 @@ const SearchOffcanvas = ({ showSearch, handleCloseSearch }) => {
       ...item,
       Amount: count,
     };
-    // Example action: Logging item details and count
-    console.log("Adding to cart:", itemWithCount);
-    // You can perform other actions here, such as dispatching to Redux store, etc.
+    dispatch(CartSliceActions.ADD(itemWithCount));
   };
 
   return (
