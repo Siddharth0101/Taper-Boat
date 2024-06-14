@@ -3,6 +3,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
+import Alert from "react-bootstrap/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { CartSliceActions } from "../../store/CartSlice";
 
@@ -10,6 +11,8 @@ const SearchOffcanvas = ({ showSearch, handleCloseSearch }) => {
   const dispatch = useDispatch();
   const filterDisplay = useSelector((state) => state.SearchData.items);
   const [counts, setCounts] = useState(Array(filterDisplay.length).fill(0));
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const decrement = (index) => {
     const newCounts = [...counts];
@@ -29,6 +32,12 @@ const SearchOffcanvas = ({ showSearch, handleCloseSearch }) => {
       Amount: count,
     };
     dispatch(CartSliceActions.ADD(itemWithCount));
+    setAlertMessage(`${item.Name} added to cart`);
+    setShowAlert(true);
+  };
+
+  const handleAlertClose = () => {
+    setShowAlert(false);
   };
 
   return (
@@ -77,6 +86,14 @@ const SearchOffcanvas = ({ showSearch, handleCloseSearch }) => {
           </Card>
         ))}
       </Offcanvas.Body>
+      <Alert
+        show={showAlert}
+        variant="success"
+        onClose={handleAlertClose}
+        dismissible
+      >
+        {alertMessage}
+      </Alert>
     </Offcanvas>
   );
 };
