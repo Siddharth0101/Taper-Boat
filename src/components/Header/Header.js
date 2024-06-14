@@ -91,7 +91,9 @@ const Header = () => {
                   Almonds
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="#home">About Us</Nav.Link>
+              <Nav.Link as={NavLink} to="/aboutus">
+                About Us
+              </Nav.Link>
             </Nav>
             <Form inline className="mr-3" onSubmit={(e) => e.preventDefault()}>
               <Row className="align-items-center">

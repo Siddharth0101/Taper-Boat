@@ -6,6 +6,7 @@ import Almond from "./pages/Almond/Almond";
 import { useSelector } from "react-redux";
 import AlertLogin from "./components/Alert/AlertLogin";
 import Search from "./components/Search/Search";
+import AboutUs from "./pages/About Us/About Us";
 
 function App() {
   const isLogged = useSelector((state) => state.LoginStore.isLogged);
@@ -21,6 +22,10 @@ function App() {
         {
           path: "/almond",
           element: <div>{isLogged ? <Almond /> : <AlertLogin />}</div>,
+        },
+        {
+          path: "/aboutus",
+          element: <AboutUs />,
         },
       ],
     },
